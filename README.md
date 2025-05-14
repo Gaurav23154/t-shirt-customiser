@@ -79,7 +79,7 @@ The core design decisions, implementation approach, and creative elements were h
 ## Interview Availability
 
 I am available for interviews on the following dates and times:
-- Weekdays: 10 AM - 4 PM EST
+- Weekdays: 10 AM - 4 PM IST
 - Weekends: By appointment
 
 Please contact me at [gauravjaiswal1098@gmail.com] to schedule an interview.
