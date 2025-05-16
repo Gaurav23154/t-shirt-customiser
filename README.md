@@ -25,7 +25,7 @@ This is a React-based customization page for a POD (Print on Demand) t-shirt sto
    ```bash
    npm run dev
    ```
-
+Vercel Deployed Link : https://t-shirt-customiser-amber.vercel.app/
 ### Cloudflare Deployment
 
 1. Ensure you have a Cloudflare account
@@ -79,7 +79,7 @@ The core design decisions, implementation approach, and creative elements were h
 ## Interview Availability
 
 I am available for interviews on the following dates and times:
-- Weekdays: 10 AM - 4 PM EST
+- Weekdays: 10 AM - 4 PM IST
 - Weekends: By appointment
 
 Please contact me at [gauravjaiswal1098@gmail.com] to schedule an interview.
