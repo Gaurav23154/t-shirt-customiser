@@ -1,6 +1,9 @@
 import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import  image1 from './assets/tshirt.jpg';
+import { useCart } from './context/CartContext';
+import Tshirt3DViewer from './components/Tshirt3DViewer';
+import Cart from './components/Cart';
+import image1 from './assets/tshirt.jpg';
 import image2 from './assets/tshirt2.jpg';
 
 // Define theme variations
@@ -29,13 +32,15 @@ const THEMES = {
 };
 
 export default function TShirtCustomizer() {
+  const { addToCart } = useCart();
   const [currentTheme, setCurrentTheme] = useState(0);
   const { register, watch } = useForm({
     defaultValues: {
       height: 180,
       weight: 80,
       build: 'athletic',
-      text: ''
+      text: '',
+      size: 'M'
     }
   });
   const [view, setView] = useState('2D');
@@ -92,12 +97,29 @@ export default function TShirtCustomizer() {
   const placeholderImage = "/api/placeholder/300/400";
   const tshirtImage = "/api/placeholder/400/500";
   
+  const handleAddToCart = () => {
+    const customTshirt = {
+      name: 'Custom T-Shirt',
+      size: watch('size'),
+      price: 29.99,
+      customImage: image,
+      customText: watch('text'),
+      specifications: {
+        height: watch('height'),
+        weight: watch('weight'),
+        build: watch('build')
+      }
+    };
+    addToCart(customTshirt);
+  };
+
   return (
     <div 
       className={`min-h-screen ${theme.background} ${theme.font} ${theme.text} p-4`}
       onKeyDown={handleKeyDown}
       tabIndex="0"
     >
+      <Cart />
       <div className={`max-w-6xl mx-auto ${theme.card} rounded-lg shadow-lg p-6`}>
         <h1 className="text-3xl font-bold mb-6 text-center">T-Shirt Customizer</h1>
         
@@ -134,15 +156,10 @@ export default function TShirtCustomizer() {
                   )}
                 </div>
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-lg">
-                  <div className="animate-pulse transform rotate-y-180 perspective-500">
-                    <img 
-                      src={tshirtImage} 
-                      alt="3D T-shirt preview" 
-                      className="max-h-full object-contain transform-style-3d animate-rotate-y"
-                    />
-                  </div>
-                </div>
+                <Tshirt3DViewer 
+                  customImage={image} 
+                  customText={watch('text')} 
+                />
               )}
             </div>
             
@@ -151,6 +168,13 @@ export default function TShirtCustomizer() {
               className={`${theme.accent} text-white px-4 py-2 rounded-lg mb-4`}
             >
               Switch to {view === '2D' ? '3D' : '2D'} View
+            </button>
+
+            <button
+              onClick={handleAddToCart}
+              className={`${theme.accent} text-white px-6 py-2 rounded-lg`}
+            >
+              Add to Cart
             </button>
             
             <p className="text-sm text-gray-500 mt-2">
@@ -253,9 +277,18 @@ export default function TShirtCustomizer() {
               </p>
             </div>
             
-            <button className={`w-full ${theme.accent} text-white py-3 rounded-lg font-semibold`}>
-              Add to Cart
-            </button>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-4">Size Selection</h2>
+              <select
+                {...register('size')}
+                className="w-full p-2 border border-gray-300 rounded-lg bg-white"
+              >
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">Extra Large</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
